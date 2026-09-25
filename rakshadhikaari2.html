@@ -1,0 +1,687 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAKSHADHIKARI.EXE</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050505;
+    color:#fff;
+    font-family:'Orbitron',sans-serif;
+    overflow-x:hidden;
+}
+
+/* LOADER */
+#loader{
+    position:fixed;
+    inset:0;
+    background:#050505;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    transition:1s;
+}
+
+.loader-logo{
+    font-size:clamp(28px,6vw,70px);
+    font-weight:900;
+    color:#ff2020;
+    letter-spacing:5px;
+    text-shadow:0 0 10px #ff2020,0 0 40px #ff2020;
+    animation:glitch .15s infinite;
+}
+
+.loader-bar{
+    width:260px;
+    height:3px;
+    background:#222;
+    margin-top:25px;
+    overflow:hidden;
+}
+
+.loader-progress{
+    width:0%;
+    height:100%;
+    background:#ff2020;
+    box-shadow:0 0 15px #ff2020;
+    animation:load 2.5s forwards;
+}
+
+@keyframes load{
+    to{width:100%}
+}
+
+/* BACKGROUND */
+.grid{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background-image:
+        linear-gradient(rgba(255,0,0,.06) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,0,0,.06) 1px,transparent 1px);
+    background-size:50px 50px;
+    animation:gridMove 12s linear infinite;
+}
+
+@keyframes gridMove{
+    from{background-position:0 0}
+    to{background-position:50px 50px}
+}
+
+.noise{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:50;
+    opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* PARTICLES */
+#particles{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:22px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:100;
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,0,0,.15);
+}
+
+.logo{
+    color:#ff2020;
+    font-weight:900;
+    letter-spacing:3px;
+    text-shadow:0 0 15px #ff2020;
+}
+
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    margin-left:25px;
+    font-size:12px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#ff2020;
+    text-shadow:0 0 10px #ff2020;
+}
+
+/* HERO */
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 20px 80px;
+    position:relative;
+}
+
+.hero-content{
+    max-width:1100px;
+}
+
+.status{
+    color:#ff2020;
+    font-size:12px;
+    letter-spacing:4px;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:clamp(45px,10vw,130px);
+    line-height:.9;
+    font-weight:900;
+    letter-spacing:-4px;
+    position:relative;
+    color:white;
+}
+
+.hero h1 span{
+    color:#ff2020;
+    text-shadow:
+        0 0 10px #ff2020,
+        0 0 35px rgba(255,0,0,.5);
+}
+
+.glitch{
+    animation:glitch .2s infinite;
+}
+
+@keyframes glitch{
+    0%{transform:translate(0)}
+    25%{transform:translate(2px,-1px)}
+    50%{transform:translate(-2px,1px)}
+    75%{transform:translate(1px,2px)}
+    100%{transform:translate(0)}
+}
+
+.hero p{
+    margin:35px auto;
+    max-width:650px;
+    color:#888;
+    line-height:1.8;
+    font-size:13px;
+}
+
+.cta{
+    display:inline-flex;
+    gap:15px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.btn{
+    padding:15px 28px;
+    border:1px solid #ff2020;
+    color:white;
+    text-decoration:none;
+    font-size:11px;
+    letter-spacing:2px;
+    position:relative;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.btn::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:#ff2020;
+    transform:translateX(-101%);
+    transition:.3s;
+    z-index:-1;
+}
+
+.btn:hover::before{
+    transform:translateX(0);
+}
+
+.btn:hover{
+    box-shadow:0 0 25px rgba(255,0,0,.5);
+}
+
+/* SECTIONS */
+section{
+    padding:110px 7%;
+    position:relative;
+}
+
+.section-title{
+    font-size:clamp(28px,5vw,55px);
+    margin-bottom:15px;
+}
+
+.section-title span{
+    color:#ff2020;
+}
+
+.section-sub{
+    color:#666;
+    font-size:12px;
+    margin-bottom:50px;
+}
+
+/* CARDS */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    padding:35px;
+    min-height:220px;
+    background:rgba(255,255,255,.025);
+    border:1px solid rgba(255,0,0,.15);
+    position:relative;
+    overflow:hidden;
+    transition:.4s;
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:2px;
+    left:-100%;
+    bottom:0;
+    background:#ff2020;
+    box-shadow:0 0 15px #ff2020;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#ff2020;
+    box-shadow:0 15px 50px rgba(255,0,0,.12);
+}
+
+.card:hover::after{
+    left:0;
+}
+
+.card-number{
+    color:#ff2020;
+    font-size:11px;
+}
+
+.card h3{
+    margin:25px 0 15px;
+    font-size:20px;
+}
+
+.card p{
+    color:#777;
+    font-size:12px;
+    line-height:1.8;
+}
+
+/* TERMINAL */
+.terminal{
+    max-width:900px;
+    margin:auto;
+    background:#080808;
+    border:1px solid #222;
+    box-shadow:0 0 50px rgba(255,0,0,.08);
+}
+
+.terminal-top{
+    padding:12px 18px;
+    border-bottom:1px solid #222;
+    color:#555;
+    font-size:11px;
+}
+
+.terminal-body{
+    padding:30px;
+    color:#aaa;
+    font-family:monospace;
+    font-size:13px;
+    line-height:2;
+}
+
+.red{
+    color:#ff2020;
+}
+
+.cursor{
+    display:inline-block;
+    width:7px;
+    height:15px;
+    background:#ff2020;
+    animation:blink .8s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0}
+}
+
+/* INSTAGRAM */
+.social{
+    text-align:center;
+}
+
+.social h2{
+    font-size:clamp(35px,7vw,80px);
+}
+
+.social h2 span{
+    color:#ff2020;
+}
+
+.social p{
+    color:#777;
+    margin:25px auto;
+    max-width:600px;
+    line-height:1.8;
+    font-size:12px;
+}
+
+/* FOOTER */
+footer{
+    padding:30px 7%;
+    border-top:1px solid #171717;
+    display:flex;
+    justify-content:space-between;
+    color:#444;
+    font-size:10px;
+}
+
+footer span{
+    color:#ff2020;
+}
+
+/* REVEAL */
+.reveal{
+    opacity:0;
+    transform:translateY(50px);
+    transition:1s ease;
+}
+
+.reveal.active{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* RESPONSIVE */
+@media(max-width:800px){
+    nav{
+        padding:18px 5%;
+    }
+
+    nav .links{
+        display:none;
+    }
+
+    section{
+        padding:80px 6%;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:10px;
+        text-align:center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+    <div class="loader-logo">RAKSHADHIKARI.EXE</div>
+    <div class="loader-bar">
+        <div class="loader-progress"></div>
+    </div>
+</div>
+
+<div class="grid"></div>
+<div class="noise"></div>
+<canvas id="particles"></canvas>
+
+<nav>
+    <div class="logo">RDI.EXE</div>
+
+    <div class="links">
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <a href="#system">THINGZ</a>
+        <a href="#contact">FOR MORE</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-content">
+
+        <div class="status">
+            // 𝙍𝘼𝙆𝙎𝙃𝘼𝘼𝘿𝙃𝙄𝙆𝘼𝘼𝙍𝙄𝙠𝘼𝙇 🗣️🏴‍☠️
+        </div>
+
+        <h1 class="glitch">
+            RAKSHA<span>DHIKARI</span><br>
+            .EXE
+        </h1>
+
+        <p>
+            Just a bunch of memories, made by a bunch of B*tches !!<BR>
+            Collecting moments, not followers.
+        </p>
+
+        <div class="cta">
+            <a href="#about" class="btn">ENTER SYSTEM</a>
+            <a href="https://www.instagram.com/rakshadhikari.exe/"
+               target="_blank"
+               class="btn">INSTAGRAM ↗</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="reveal">
+
+        <div class="section-title">
+            WHO ARE <span>WE?</span>
+        </div>
+
+        <div class="section-sub">
+            // RAKSHADHIKARI.EXE / ABOUT
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-number">01 / HIGHLIGHTS</div>
+                <h3>HIGHLIGHT</h3>
+                <p>
+                    Just random moments
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-number">02 / POST</div>
+                <h3>POST</h3>
+                <p>
+                    Captured today, remembered forever
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-number">03 / EXPLORE</div>
+                <h3>EXPLORE</h3>
+                <p>
+                    Visit our instagram page for more.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- SYSTEM -->
+<section id="system">
+    <div class="reveal">
+
+        <div class="section-title">
+            ACCOUNT <span>STATUS</span>
+        </div>
+
+        <div class="section-sub">
+            // JUST RAKSHADHIKARI THINGZZ..!
+        </div>
+
+        <div class="terminal">
+
+            <div class="terminal-top">
+                RAKSHADHIKARI.exe loadingg.....
+            </div>
+
+            <div class="terminal-body">
+                <div><span class="red">root@rdx</span>:~$ boot</div>
+                <div>Initializing rakshadhikari.exe...</div>
+                <div>Just wait and see.......... <span class="red">!</span></div>
+                <div>Peak Sambavam is LOADINGG.......... <span class="red">!?</span></div>
+                <div>Loadingg...... <span class="red">!!</span></div>
+                <div>Loadingg........ <span class="red">!!</span></div>
+                <br>
+                <div>
+                    <span class="red">root@rdx</span>:~$
+                    <span class="cursor"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- SOCIAL -->
+<section id="contact">
+    <div class="social reveal">
+
+        <div class="section-sub">
+            // FIND US ONLINE
+        </div>
+
+        <h2>
+            RAKSHA<span>DHIKARI</span>
+        </h2>
+
+        <p>
+            Follow the squad and stay connected with
+            everything we build.
+        </p>
+
+        <a
+          class="btn"
+          href="https://www.instagram.com/rakshadhikari.exe/"
+          target="_blank">
+          FOLLOW US ON INSTAGRAM ↗
+        </a>
+
+    </div>
+</section>
+
+<footer>
+    <div>© 2026 <span>RAKSHADHIKARI.EXE</span></div>
+    <div>BUILT BY N.1RANJANN</div>
+</footer>
+
+<script>
+
+/* LOADER */
+window.addEventListener("load",()=>{
+    setTimeout(()=>{
+        document.getElementById("loader").style.opacity="0";
+        setTimeout(()=>{
+            document.getElementById("loader").style.display="none";
+        },1000);
+    },2600);
+});
+
+
+/* SCROLL REVEAL */
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll(){
+    reveals.forEach(el=>{
+        const top = el.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if(top < windowHeight - 100){
+            el.classList.add("active");
+        }
+    });
+}
+
+window.addEventListener("scroll",revealOnScroll);
+revealOnScroll();
+
+
+/* PARTICLES */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener("resize",resizeCanvas);
+
+for(let i=0;i<80;i++){
+    particles.push({
+        x:Math.random()*window.innerWidth,
+        y:Math.random()*window.innerHeight,
+        size:Math.random()*2+0.5,
+        speed:Math.random()*0.5+0.1
+    });
+}
+
+function drawParticles(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach(p=>{
+
+        p.y -= p.speed;
+
+        if(p.y < 0){
+            p.y = canvas.height;
+            p.x = Math.random()*canvas.width;
+        }
+
+        ctx.fillStyle="rgba(255,30,30,.6)";
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.fill();
+
+    });
+
+    requestAnimationFrame(drawParticles);
+}
+
+drawParticles();
+
+
+/* MOUSE GLOW */
+document.addEventListener("mousemove",(e)=>{
+
+    const x = e.clientX;
+    const y = e.clientY;
+
+    document.body.style.background =
+    `radial-gradient(circle 300px at ${x}px ${y}px,
+     rgba(255,0,0,.08),
+     #050505 70%)`;
+
+});
+
+</script>
+
+</body>
+</html>
+```
